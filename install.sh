@@ -5,8 +5,8 @@
 # 如果有 IP 连接未开放端口，该 IP 将进入扫描者名单，过期时间 IP_DENY_SECOND 秒。
 # 如果该 IP 继续连接未开放端口，过期时间不复位，但包计数器会累计，
 # 如果累计超过 PORT_SCAN_MAX，该 IP 将无法连接任何端口，直到过期。
-IP_DENY_SECOND=30
-PORT_SCAN_MAX=3
+IP_DENY_SECOND=10
+PORT_SCAN_MAX=2
 
 # 目标网卡
 DEV=eth0
@@ -21,6 +21,8 @@ ipset create pub-port-set bitmap:port range 0-65535
 
 # 如果应用程序端口有变化，需及时更新该 set，否则正常用户会被当成扫描者
 ipset add pub-port-set 22
+ipset add pub-port-set 999
+ipset add pub-port-set 18080
 # ipset add pub-port-set 443
 # 添加更多端口 ...
 
