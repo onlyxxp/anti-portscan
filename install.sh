@@ -7,8 +7,8 @@
 # 如果累计超过 PORT_SCAN_MAX，该 IP 将无法连接任何端口，直到过期。
 apt-get install ipset  iptables
 
-IP_DENY_SECOND=10
-PORT_SCAN_MAX=2
+IP_DENY_SECOND=86400
+PORT_SCAN_MAX=1
 
 # 目标网卡
 DEV=eth0
