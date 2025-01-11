@@ -57,6 +57,12 @@ iptables \
   -j SET \
   --add-set scanner-ip-set src
 
+
+# 
+echo "scanner-ip-set trap-scan pub-port-set"
+ipset list pub-port-set
+  
+
 iptables \
   -A trap-scan \
   -j DROP
