@@ -62,34 +62,4 @@ iptables \
   -j DROP
 ## end function ##
 
-# 连接未开放端口，大概率是扫描者，交给 trap-scan 处理
-iptables \
-  -i $DEV \
-  $INPUT \
-  -p tcp --syn \
-  -m set ! --match-set pub-port-set dst \
-  -j trap-scan
 
-
-# 连接未开放端口超过 PORT_SCAN_MAX 次的 IP，禁止访问任何服务！
-# 此处不更新计数器
-# 已建立的 TCP 不影响，因为此处只针对 --syn
-iptables \
-  -i $DEV \
-  $INPUT \
-  -p tcp --syn \
-  -m set ! --update-counters \
-  --match-set scanner-ip-set src \
-  --packets-gt $PORT_SCAN_MAX \
-  -j DROP
-
-
-# 屏蔽非 SYN 类型的端口扫描
-# 例如扫描者发送 ACK，服务器默认会回复 RST，仍有可能暴露端口
-# 因此对于非 SYN 包，如果不匹配已建立的连接，则丢弃
-iptables \
-  -i $DEV \
-  -A INPUT \
-  -p tcp ! --syn \
-  -m conntrack ! --ctstate ESTABLISHED,RELATED \
-  -j DROP
