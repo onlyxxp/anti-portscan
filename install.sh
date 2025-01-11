@@ -22,9 +22,9 @@ INPUT="-A INPUT"
 ipset create pub-port-set bitmap:port range 0-65535
 
 # 如果应用程序端口有变化，需及时更新该 set，否则正常用户会被当成扫描者
-ipset add pub-port-set 22
-ipset add pub-port-set 999
-ipset add pub-port-set 18080
+#ipset add pub-port-set 22
+#ipset add pub-port-set 999
+#ipset add pub-port-set 18080
 # ipset add pub-port-set 443
 # 添加更多端口 ...
 
@@ -63,9 +63,6 @@ echo "scanner-ip-set trap-scan pub-port-set"
 ipset list pub-port-set
   
 
-iptables \
-  -A trap-scan \
-  -j DROP
-## end function ##
+
 
 
